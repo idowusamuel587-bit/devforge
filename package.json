@@ -1,0 +1,22 @@
+{
+  "name": "devforge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A modern project management workspace with authentication, task tracking, automated tests, and continuous integration.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/app.js"
+  },
+  "keywords": [
+    "project-management",
+    "productivity",
+    "supabase",
+    "javascript",
+    "testing"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
