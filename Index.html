@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d19">
+  <meta name="description" content="DEVFORGE — your workspace for projects, tasks, and productivity.">
+  <title>DEVFORGE — Build Something Great</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080d19;
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 8%;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: #60a5fa;
+    }
+
+    .badge {
+      color: #86efac;
+      background: #123524;
+      padding: 9px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 90px 8% 60px;
+    }
+
+    .tag {
+      display: inline-block;
+      color: #93c5fd;
+      background: #172554;
+      padding: 10px 15px;
+      border-radius: 25px;
+      margin-bottom: 25px;
+      font-size: 13px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 8vw, 76px);
+      line-height: 1.1;
+      max-width: 800px;
+      margin-bottom: 25px;
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: #60a5fa;
+    }
+
+    .intro {
+      max-width: 620px;
+      color: #94a3b8;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 65px;
+    }
+
+    button {
+      border: none;
+      padding: 15px 22px;
+      border-radius: 9px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .secondary {
+      background: #172033;
+      color: white;
+      border: 1px solid #334155;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #101827;
+      border: 1px solid #263449;
+      border-radius: 16px;
+      padding: 25px;
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .card h2 {
+      font-size: 19px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #94a3b8;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .status {
+      margin-top: 30px;
+      padding: 18px;
+      background: #101827;
+      border-radius: 12px;
+      color: #94a3b8;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      border-top: 1px solid #1e293b;
+      padding: 25px;
+      margin-top: 50px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 500px) {
+      header {
+        padding: 20px 5%;
+      }
+
+      main {
+        padding: 65px 5% 40px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">DEVFORGE.</div>
+    <div class="badge">Developer Workspace</div>
+  </header>
+
+  <main>
+    <div class="tag">YOUR NEXT BIG IDEA STARTS HERE</div>
+
+    <h1>Build better.<br><span>Work smarter.</span></h1>
+
+    <p class="intro">
+      Bring your projects, tasks, and ideas together in one focused workspace.
+      Stay organized, track your progress, and turn ambitious ideas into real results.
+    </p>
+
+    <div class="actions">
+      <button class="primary" onclick="showMessage()">
+        Explore DEVFORGE →
+      </button>
+
+      <button class="secondary" onclick="showFeatures()">
+        Discover Features
+      </button>
+    </div>
+
+    <section class="features" id="features">
+      <article class="card">
+        <div class="icon">📁</div>
+        <h2>Project Management</h2>
+        <p>Organize your projects and keep your goals in one accessible workspace.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">✓</div>
+        <h2>Task Tracking</h2>
+        <p>Plan your work, monitor progress, and keep important tasks organized.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🔐</div>
+        <h2>Secure Accounts</h2>
+        <p>Prepare for personalized workspaces with account authentication.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">⚡</div>
+        <h2>Built for Growth</h2>
+        <p>A modern foundation designed to grow with new features and improvements.</p>
+      </article>
+    </section>
+
+    <div class="status" id="message">
+      <strong>Welcome to DEVFORGE.</strong><br>
+      Your development workspace starts here.
+    </div>
+  </main>
+
+  <footer>
+    © <span id="year"></span> DEVFORGE. Built to help ideas become reality.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    function showMessage() {
+      document.getElementById("message").innerHTML =
+        "<strong>Welcome, builder!</strong><br>" +
+        "The DEVFORGE foundation is ready. Project management, " +
+        "authentication, and database features will be added next.";
+    }
+
+    function showFeatures() {
+      document.getElementById("features").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+  </script>
+</body>
+    </html>
