@@ -32,8 +32,8 @@ devforge/
 │       └── tests.yml
 ├── src/
 │   └── app.js
-├── tests/
-│   └── app.test.js
+├── src/tests/app.test.js
+│   
 ├── index.html
 ├── package.json
 └── README.md
