@@ -6,7 +6,7 @@ import {
   APP_VERSION,
   createProject,
   createTask
-} from "../src/app.js";
+} from "../app.js";
 
 test("application has the correct name", () => {
   assert.equal(APP_NAME, "DEVFORGE");
