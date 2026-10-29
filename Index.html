@@ -3,250 +3,801 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d19">
-  <meta name="description" content="DEVFORGE — your workspace for projects, tasks, and productivity.">
-  <title>DEVFORGE — Build Something Great</title>
+  <meta name="theme-color" content="#09090f">
+  <meta name="description" content="DEVFORGE is your workspace for managing development projects and tasks.">
+
+  <title>DEVFORGE — Developer Workspace</title>
 
   <style>
+    :root {
+      --bg: #09090f;
+      --panel: #12121d;
+      --panel2: #191929;
+      --text: #f4f4ff;
+      --muted: #999ab5;
+      --blue: #6385ff;
+      --purple: #a16bff;
+      --border: #292940;
+      --green: #51d6a0;
+      --red: #ff697d;
+    }
+
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: #080d19;
-      color: #f8fafc;
+      margin: 0;
       min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 0%, #20204b 0%, transparent 35%),
+        radial-gradient(ellipse at 100% 20%, #29183f 0%, transparent 28%),
+        var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: auto;
     }
 
     header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 22px 8%;
-      border-bottom: 1px solid #1e293b;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
     }
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      color: #60a5fa;
+    .brand {
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .brand span {
+      color: var(--blue);
     }
 
     .badge {
-      color: #86efac;
-      background: #123524;
-      padding: 9px 14px;
-      border-radius: 20px;
+      padding: 7px 11px;
+      border: 1px solid #45416e;
+      border-radius: 30px;
+      color: #c8b5ff;
+      background: #211a38;
       font-size: 12px;
     }
 
     main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 90px 8% 60px;
+      padding: 38px 0 70px;
     }
 
-    .tag {
-      display: inline-block;
-      color: #93c5fd;
-      background: #172554;
-      padding: 10px 15px;
-      border-radius: 25px;
-      margin-bottom: 25px;
-      font-size: 13px;
+    .hero {
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      color: #b4a0ff;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
     h1 {
-      font-size: clamp(40px, 8vw, 76px);
+      margin: 12px 0;
+      font-size: clamp(30px, 6vw, 49px);
       line-height: 1.1;
-      max-width: 800px;
-      margin-bottom: 25px;
-      letter-spacing: -2px;
     }
 
-    h1 span {
-      color: #60a5fa;
+    .gradient {
+      color: #9d8cff;
+      background: linear-gradient(90deg, #7193ff, #c38aff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .intro {
-      max-width: 620px;
-      color: #94a3b8;
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 32px;
+    p {
+      line-height: 1.6;
     }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 65px;
-    }
-
-    button {
-      border: none;
-      padding: 15px 22px;
-      border-radius: 9px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .primary {
-      background: #3b82f6;
-      color: white;
-    }
-
-    .secondary {
-      background: #172033;
-      color: white;
-      border: 1px solid #334155;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
+    .muted {
+      color: var(--muted);
     }
 
     .card {
-      background: #101827;
-      border: 1px solid #263449;
-      border-radius: 16px;
-      padding: 25px;
+      padding: 22px;
+      background: linear-gradient(145deg, #171725, #10101a);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 15px 45px #00000016;
     }
 
-    .icon {
-      font-size: 30px;
-      margin-bottom: 18px;
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
     }
 
-    .card h2 {
-      font-size: 19px;
-      margin-bottom: 12px;
+    h2 {
+      margin-top: 0;
+      font-size: 21px;
     }
 
-    .card p {
-      color: #94a3b8;
-      line-height: 1.7;
-      font-size: 14px;
+    h3 {
+      margin-top: 0;
+      font-size: 17px;
     }
 
-    .status {
-      margin-top: 30px;
-      padding: 18px;
-      background: #101827;
-      border-radius: 12px;
-      color: #94a3b8;
-      line-height: 1.7;
+    .field {
+      margin: 15px 0;
     }
 
-    footer {
-      text-align: center;
-      color: #64748b;
-      border-top: 1px solid #1e293b;
-      padding: 25px;
-      margin-top: 50px;
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #d4d4e9;
       font-size: 13px;
     }
 
-    @media (max-width: 500px) {
-      header {
-        padding: 20px 5%;
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 13px;
+      color: var(--text);
+      background: #0b0b14;
+      border: 1px solid #34344d;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px #6385ff22;
+    }
+
+    textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .btn {
+      padding: 11px 16px;
+      color: white;
+      background: linear-gradient(100deg, #587aff, #895cff);
+      border: 0;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      color: #ddd8ff;
+      background: #25223a;
+      border: 1px solid #454064;
+    }
+
+    .btn-danger {
+      color: #ffb7c0;
+      background: #351b27;
+      border: 1px solid #693040;
+    }
+
+    .btn-small {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .full {
+      width: 100%;
+    }
+
+    .form-message {
+      margin-top: 13px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .success {
+      color: var(--green);
+    }
+
+    .error {
+      color: var(--red);
+    }
+
+    .notice {
+      padding: 12px 14px;
+      color: #d4d2ff;
+      background: #19172d;
+      border: 1px solid #38325c;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 26px 0;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stat-number {
+      margin: 13px 0 5px;
+      font-size: 33px;
+      font-weight: 800;
+    }
+
+    .stat-icon {
+      font-size: 22px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .item {
+      padding: 14px;
+      margin-top: 12px;
+      background: #0c0c16;
+      border: 1px solid #29293e;
+      border-radius: 12px;
+    }
+
+    .item-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .item-title {
+      margin: 0 0 7px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .item-description {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .item-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    .task-done .item-title {
+      color: #8e92a8;
+      text-decoration: line-through;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 8px;
+      color: #b8c5ff;
+      background: #202747;
+      border-radius: 20px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .status.done {
+      color: #8ef0c2;
+      background: #15382e;
+    }
+
+    .empty {
+      padding: 25px 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      height: 7px;
+      margin-top: 12px;
+      overflow: hidden;
+      background: #29293e;
+      border-radius: 20px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      transition: width .3s;
+    }
+
+    footer {
+      padding: 25px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .auth-layout, .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-number {
+        font-size: 28px;
       }
 
       main {
-        padding: 65px 5% 40px;
+        padding-top: 28px;
       }
 
-      h1 {
-        letter-spacing: -1px;
+      .card {
+        padding: 17px;
+      }
+
+      header {
+        flex-wrap: wrap;
       }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="logo">DEVFORGE.</div>
-    <div class="badge">Developer Workspace</div>
-  </header>
+  <div class="container">
+    <header>
+      <div class="brand">DEV<span>FORGE</span></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="badge">Developer Workspace</span>
+        <button id="logoutButton" class="btn btn-secondary btn-small hidden">
+          Log out
+        </button>
+      </div>
+    </header>
 
-  <main>
-    <div class="tag">YOUR NEXT BIG IDEA STARTS HERE</div>
+    <main>
+      <section class="hero">
+        <div class="eyebrow">Build. Organize. Deliver.</div>
+        <h1>Your ideas deserve a<br><span class="gradient">better workspace.</span></h1>
+        <p class="muted">
+          Organize your projects, track your tasks, and monitor your progress
+          from one simple dashboard.
+        </p>
+      </section>
 
-    <h1>Build better.<br><span>Work smarter.</span></h1>
+      <section id="authSection" class="auth-layout">
+        <div class="card">
+          <h2>Welcome back 👋</h2>
+          <p class="muted">Log in to continue working on your projects.</p>
 
-    <p class="intro">
-      Bring your projects, tasks, and ideas together in one focused workspace.
-      Stay organized, track your progress, and turn ambitious ideas into real results.
-    </p>
+          <form id="loginForm">
+            <div class="field">
+              <label for="loginEmail">Email address</label>
+              <input id="loginEmail" type="email" autocomplete="email"
+                placeholder="you@example.com" required>
+            </div>
 
-    <div class="actions">
-      <button class="primary" onclick="showMessage()">
-        Explore DEVFORGE →
-      </button>
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" type="password"
+                autocomplete="current-password" minlength="6" required>
+            </div>
 
-      <button class="secondary" onclick="showFeatures()">
-        Discover Features
-      </button>
-    </div>
+            <button id="loginButton" class="btn full" type="submit">
+              Log in
+            </button>
+          </form>
 
-    <section class="features" id="features">
-      <article class="card">
-        <div class="icon">📁</div>
-        <h2>Project Management</h2>
-        <p>Organize your projects and keep your goals in one accessible workspace.</p>
-      </article>
+          <div id="loginMessage" class="form-message" role="status"></div>
+        </div>
 
-      <article class="card">
-        <div class="icon">✓</div>
-        <h2>Task Tracking</h2>
-        <p>Plan your work, monitor progress, and keep important tasks organized.</p>
-      </article>
+        <div class="card">
+          <h2>Create your account ✨</h2>
+          <p class="muted">Start managing your projects with DEVFORGE.</p>
 
-      <article class="card">
-        <div class="icon">🔐</div>
-        <h2>Secure Accounts</h2>
-        <p>Prepare for personalized workspaces with account authentication.</p>
-      </article>
+          <form id="signupForm">
+            <div class="field">
+              <label for="signupEmail">Email address</label>
+              <input id="signupEmail" type="email" autocomplete="email"
+                placeholder="you@example.com" required>
+            </div>
 
-      <article class="card">
-        <div class="icon">⚡</div>
-        <h2>Built for Growth</h2>
-        <p>A modern foundation designed to grow with new features and improvements.</p>
-      </article>
-    </section>
+            <div class="field">
+              <label for="signupPassword">Create a password</label>
+              <input id="signupPassword" type="password"
+                autocomplete="new-password" minlength="6"
+                placeholder="At least 6 characters" required>
+            </div>
 
-    <div class="status" id="message">
-      <strong>Welcome to DEVFORGE.</strong><br>
-      Your development workspace starts here.
-    </div>
-  </main>
+            <button id="signupButton" class="btn full" type="submit">
+              Create account
+            </button>
+          </form>
 
-  <footer>
-    © <span id="year"></span> DEVFORGE. Built to help ideas become reality.
-  </footer>
+          <div id="signupMessage" class="form-message" role="status"></div>
 
-  <script>
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+          <p class="muted" style="font-size:12px">
+            Email verification may be required before you can log in.
+          </p>
+        </div>
+      </section>
 
-    function showMessage() {
-      document.getElementById("message").innerHTML =
-        "<strong>Welcome, builder!</strong><br>" +
-        "The DEVFORGE foundation is ready. Project management, " +
-        "authentication, and database features will be added next.";
+      <section id="dashboardSection" class="hidden">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Your workspace</div>
+            <h2 style="margin:8px 0">Dashboard</h2>
+            <p id="welcomeText" class="muted" style="margin:0"></p>
+          </div>
+          <button id="refreshButton" class="btn btn-secondary btn-small">
+            Refresh
+          </button>
+        </div>
+
+        <div id="dashboardMessage" class="form-message" role="status"></div>
+
+        <div class="stats">
+          <div class="card">
+            <div class="stat-icon">📁</div>
+            <div class="stat-number" id="projectCount">0</div>
+            <div class="stat-label">Total projects</div>
+          </div>
+
+          <div class="card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-number" id="taskCount">0</div>
+            <div class="stat-label">Total tasks</div>
+          </div>
+
+          <div class="card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-number" id="completedCount">0</div>
+            <div class="stat-label">Completed tasks</div>
+            <div class="progress-track">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p id="progressText" class="muted" style="font-size:12px;margin-bottom:0">
+              0% completed
+            </p>
+          </div>
+        </div>
+
+        <div class="workspace">
+          <section class="card">
+            <div class="section-heading">
+              <h2 style="margin:0">📁 My Projects</h2>
+            </div>
+
+            <form id="projectForm">
+              <div class="field">
+                <label for="projectName">Project name</label>
+                <input id="projectName" maxlength="100"
+                  placeholder="e.g. My portfolio website" required>
+              </div>
+
+              <div class="field">
+                <label for="projectDescription">Description</label>
+                <textarea id="projectDescription" maxlength="1000"
+                  placeholder="What are you building?"></textarea>
+              </div>
+
+              <button id="createProjectButton" class="btn full" type="submit">
+                + Create project
+              </button>
+            </form>
+
+            <div id="projectList"></div>
+          </section>
+
+          <section class="card">
+            <div class="section-heading">
+              <h2 style="margin:0">✅ My Tasks</h2>
+            </div>
+
+            <form id="taskForm">
+              <div class="field">
+                <label for="taskTitle">Task title</label>
+                <input id="taskTitle" maxlength="200"
+                  placeholder="e.g. Build the homepage" required>
+              </div>
+
+              <div class="field">
+                <label for="taskProject">Choose a project</label>
+                <select id="taskProject" required>
+                  <option value="">Create a project first</option>
+                </select>
+              </div>
+
+              <button id="createTaskButton" class="btn full" type="submit">
+                + Add task
+              </button>
+            </form>
+
+            <div id="taskList"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      DEVFORGE © 2026 · Build something meaningful.
+    </footer>
+  </div>
+
+  <script type="module">
+    import { createClient } from
+      "https://esm.sh/@supabase/supabase-js@2";
+
+    const SUPABASE_URL =
+      "https://gvqzhorjiimuhcqtobna.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_b5T9RN9yJkKl5iKZt9n1IA_wrjYgemL";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const $ = (id) => document.getElementById(id);
+
+    let currentUser = null;
+    let projects = [];
+    let tasks = [];
+    let busy = false;
+
+    function showMessage(id, message, type = "") {
+      const element = $(id);
+      element.textContent = message;
+      element.className = "form-message " + type;
     }
 
-    function showFeatures() {
-      document.getElementById("features").scrollIntoView({
-        behavior: "smooth"
-      });
+    function setBusy(buttonId, state, text = "Please wait...") {
+      const button = $(buttonId);
+
+      if (state) {
+        button.dataset.originalText = button.textContent;
+        button.textContent = text;
+        button.disabled = true;
+      } else {
+        button.textContent =
+          button.dataset.originalText || button.textContent;
+        button.disabled = false;
+      }
     }
-  </script>
-</body>
-    </html>
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function friendlyError(error) {
+      const message = error?.message || "Something went wrong.";
+
+      if (/invalid login credentials/i.test(message)) {
+        return "Email or password is incorrect. Check your details and try again.";
+      }
+
+      if (/email not confirmed/i.test(message)) {
+        return "Please verify your email before logging in.";
+      }
+
+      if (/user already registered/i.test(message)) {
+        return "An account with this email already exists. Try logging in.";
+      }
+
+      if (/failed to fetch|network/i.test(message)) {
+        return "Connection failed. Check your internet and try again.";
+      }
+
+      return message;
+    }
+
+    function showDashboard(isLoggedIn) {
+      $("authSection").classList.toggle("hidden", isLoggedIn);
+      $("dashboardSection").classList.toggle("hidden", !isLoggedIn);
+      $("logoutButton").classList.toggle("hidden", !isLoggedIn);
+
+      if (isLoggedIn && currentUser) {
+        $("welcomeText").textContent =
+          "Signed in as " + currentUser.email;
+      }
+    }
+
+    async function loadData() {
+      if (!currentUser) return;
+
+      showMessage("dashboardMessage", "Loading your workspace...");
+
+      try {
+        const [projectResult, taskResult] = await Promise.all([
+          supabase
+            .from("projects")
+            .select("id, name, description, created_at")
+            .order("created_at", { ascending: false }),
+
+          supabase
+            .from("tasks")
+            .select("id, project_id, title, completed, created_at")
+            .order("created_at", { ascending: false })
+        ]);
+
+        if (projectResult.error) throw projectResult.error;
+        if (taskResult.error) throw taskResult.error;
+
+        projects = projectResult.data || [];
+        tasks = taskResult.data || [];
+
+        renderDashboard();
+        showMessage("dashboardMessage", "");
+      } catch (error) {
+        showMessage(
+          "dashboardMessage",
+          friendlyError(error),
+          "error"
+        );
+      }
+    }
+
+    function renderDashboard() {
+      const completed = tasks.filter((task) => task.completed).length;
+      const total = tasks.length;
+      const percent = total ? Math.round(completed / total * 100) : 0;
+
+      $("projectCount").textContent = projects.length;
+      $("taskCount").textContent = total;
+      $("completedCount").textContent = completed;
+      $("progressFill").style.width = percent + "%";
+      $("progressText").textContent = percent + "% completed";
+
+      renderProjects();
+      renderTaskProjectOptions();
+      renderTasks();
+    }
+
+    function renderProjects() {
+      const container = $("projectList");
+
+      if (!projects.length) {
+        container.innerHTML =
+          '<div class="empty">No projects yet. Create your first project above.</div>';
+        return;
+      }
+
+      container.innerHTML = projects.map((project) => {
+        const projectTasks = tasks.filter(
+          (task) => task.project_id === project.id
+        );
+
+        const done = projectTasks.filter(
+          (task) => task.completed
+        ).length;
+
+        return `
+          <article class="item">
+            <div class="item-top">
+              <div>
+                <p class="item-title">${escapeHTML(project.name)}</p>
+                <p class="item-description">
+                  ${escapeHTML(project.description || "No description")}
+                </p>
+              </div>
+              <span class="status">${projectTasks.length} tasks</span>
+            </div>
+
+            <p class="muted" style="font-size:12px;margin-bottom:0">
+              ${done} of ${projectTasks.length} completed
+            </p>
+
+            <div class="progress-track">
+              <div class="progress-fill" style="width:${
+                projectTasks.length
+                  ? Math.round(done / projectTasks.length * 100)
+                  : 0
+              }%"></div>
+            </div>
+
+            <div class="item-actions">
+              <button class="btn btn-danger btn-small"
+                data-action="delete-project"
+                data-id="${escapeHTML(project.id)}">
+                Delete project
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderTaskProjectOptions() {
+      const select = $("taskProject");
+      const previous = select.value;
+
+      if (!projects.length) {
+        select.innerHTML = '<option value="">Create a project first</option>';
+        return;
+      }
+
+      select.innerHTML =
+        '<option value="">Choose a project</option>' +
+        projects.map((project) => `
+          <option value="${escapeHTML(project.id)}">
+            ${escapeHTML(project.name)}
+          </option>
+        `).join("");
+
+      if (projects.some((project) => project.id === previous)) {
+        select.value = previous;
+      }
+    }
+
+    function renderTasks() {
+      const container = $("taskList");
+
+      if (!tasks.length) {
+        container.innerHTML =
+          '<div class="empty">No tasks yet. Add your first task above.</div>';
+        return;
+      }
+
+      container.innerHTML = tasks.map((task) => {
+        const project = projects.find(
+          (item) => item.id === task.project_id
+        );
+
+        return `
+          <article class="item ${task.completed ? "task-done" : ""}">
+            <div class="item-top">
+              <div>
+                <p class="item-title">${escapeHT
