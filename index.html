@@ -3,364 +3,979 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090d1a">
-  <title>DEVFORGE — Project & Task Manager</title>
+  <meta name="theme-color" content="#09090f">
+  <meta name="description" content="DEVFORGE is your workspace for managing development projects and tasks.">
+
+  <title>DEVFORGE — Developer Workspace</title>
+
   <style>
-    :root{color-scheme:dark;--bg:#090d1a;--panel:#11182b;--panel2:#151f38;--line:#273451;--text:#f4f7ff;--muted:#9ba9c7;--blue:#4f8cff;--purple:#9b6bff;--green:#45d6a0;--red:#ff6b83}
-    *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(ellipse at top left,#1b2850 0,transparent 42%),radial-gradient(ellipse at bottom right,#291747 0,transparent 38%),var(--bg);color:var(--text)}
-    button,input,textarea{font:inherit}
-    button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;color:white;background:linear-gradient(100deg,var(--blue),var(--purple));font-weight:700}
-    button:disabled{opacity:.6;cursor:wait}
-    input,textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#0b1223;color:var(--text);outline:none}
-    input:focus,textarea:focus{border-color:var(--blue)}
-    label{display:block;color:var(--muted);font-size:.9rem;margin:12px 0 7px}
-    .wrap{width:min(1100px,92%);margin:auto;padding:28px 0 50px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:30px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:1.35rem;letter-spacing:.04em}
-    .logo{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--purple));box-shadow:0 8px 28px #4f8cff44}
-    .muted{color:var(--muted)} .small{font-size:.88rem}
-    .card{background:linear-gradient(145deg,#141c31ee,#0f1628ee);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 20px 60px #0002}
-    .auth{width:min(440px,100%);margin:7vh auto}
-    h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.12;margin:0 0 10px}
-    h2{margin:0 0 16px;font-size:1.25rem}
-    .tabs{display:flex;gap:8px;margin:22px 0 10px}
-    .tabs button{flex:1;background:#1b2540;color:var(--muted)}
-    .tabs button.active{background:linear-gradient(100deg,var(--blue),var(--purple));color:white}
-    .form button{width:100%;margin-top:18px}
-    .message{margin-top:14px;padding:12px 14px;border-radius:12px;display:none;line-height:1.45;overflow-wrap:anywhere}
-    .message.show{display:block}.message.ok{background:#12372f;color:#a8f7d8;border:1px solid #236b56}.message.err{background:#3c1b2b;color:#ffc1ce;border:1px solid #783249}.message.info{background:#172849;color:#c9dcff;border:1px solid #304d7b}
-    .dashboard{display:none}
-    .hero{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:22px}
-    .hero p{margin:8px 0 0}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
-    .stat strong{display:block;font-size:1.8rem;margin-top:6px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-    .inline{display:flex;gap:8px;align-items:center}
-    .inline>*{min-width:0}
-    .list{display:grid;gap:10px;margin-top:14px}
-    .item{padding:13px;border:1px solid var(--line);border-radius:13px;background:#0d1426}
-    .itemtop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .item strong{overflow-wrap:anywhere}
-    .item p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
-    .taskrow{display:flex;align-items:center;gap:10px}
-    .taskrow input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue);flex:0 0 auto}
-    .taskrow span{flex:1;overflow-wrap:anywhere}
-    .done{text-decoration:line-through;color:var(--muted)}
-    .ghost{background:#202b46;color:#dce5ff;padding:8px 11px;font-size:.85rem}
-    .danger{background:#442032;color:#ffc2ce;padding:8px 11px;font-size:.85rem}
-    .empty{color:var(--muted);text-align:center;padding:18px 8px}
-    footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:28px}
-    @media(max-width:700px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.hero{flex-direction:column}.wrap{padding-top:18px}.card{padding:18px}}
+    :root {
+      --bg: #09090f;
+      --panel: #12121d;
+      --panel2: #191929;
+      --text: #f4f4ff;
+      --muted: #999ab5;
+      --blue: #6385ff;
+      --purple: #a16bff;
+      --border: #292940;
+      --green: #51d6a0;
+      --red: #ff697d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 0%, #20204b 0%, transparent 35%),
+        radial-gradient(ellipse at 100% 20%, #29183f 0%, transparent 28%),
+        var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .brand span {
+      color: var(--blue);
+    }
+
+    .badge {
+      padding: 7px 11px;
+      border: 1px solid #45416e;
+      border-radius: 30px;
+      color: #c8b5ff;
+      background: #211a38;
+      font-size: 12px;
+    }
+
+    main {
+      padding: 38px 0 70px;
+    }
+
+    .hero {
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      color: #b4a0ff;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 12px 0;
+      font-size: clamp(30px, 6vw, 49px);
+      line-height: 1.1;
+    }
+
+    .gradient {
+      color: #9d8cff;
+      background: linear-gradient(90deg, #7193ff, #c38aff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .card {
+      padding: 22px;
+      background: linear-gradient(145deg, #171725, #10101a);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 15px 45px #00000016;
+    }
+
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    h3 {
+      margin-top: 0;
+      font-size: 17px;
+    }
+
+    .field {
+      margin: 15px 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #d4d4e9;
+      font-size: 13px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 13px;
+      color: var(--text);
+      background: #0b0b14;
+      border: 1px solid #34344d;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px #6385ff22;
+    }
+
+    textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .btn {
+      padding: 11px 16px;
+      color: white;
+      background: linear-gradient(100deg, #587aff, #895cff);
+      border: 0;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      color: #ddd8ff;
+      background: #25223a;
+      border: 1px solid #454064;
+    }
+
+    .btn-danger {
+      color: #ffb7c0;
+      background: #351b27;
+      border: 1px solid #693040;
+    }
+
+    .btn-small {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .full {
+      width: 100%;
+    }
+
+    .form-message {
+      margin-top: 13px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .success {
+      color: var(--green);
+    }
+
+    .error {
+      color: var(--red);
+    }
+
+    .notice {
+      padding: 12px 14px;
+      color: #d4d2ff;
+      background: #19172d;
+      border: 1px solid #38325c;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 26px 0;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stat-number {
+      margin: 13px 0 5px;
+      font-size: 33px;
+      font-weight: 800;
+    }
+
+    .stat-icon {
+      font-size: 22px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .item {
+      padding: 14px;
+      margin-top: 12px;
+      background: #0c0c16;
+      border: 1px solid #29293e;
+      border-radius: 12px;
+    }
+
+    .item-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .item-title {
+      margin: 0 0 7px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .item-description {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .item-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    .task-done .item-title {
+      color: #8e92a8;
+      text-decoration: line-through;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 8px;
+      color: #b8c5ff;
+      background: #202747;
+      border-radius: 20px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .status.done {
+      color: #8ef0c2;
+      background: #15382e;
+    }
+
+    .empty {
+      padding: 25px 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      height: 7px;
+      margin-top: 12px;
+      overflow: hidden;
+      background: #29293e;
+      border-radius: 20px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      transition: width .3s;
+    }
+
+    footer {
+      padding: 25px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .auth-layout, .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-number {
+        font-size: 28px;
+      }
+
+      main {
+        padding-top: 28px;
+      }
+
+      .card {
+        padding: 17px;
+      }
+
+      header {
+        flex-wrap: wrap;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
+  <div class="container">
     <header>
-      <div class="brand"><div class="logo">D</div><span>DEVFORGE</span></div>
-      <span class="muted small">Build • Organize • Complete</span>
+      <div class="brand">DEV<span>FORGE</span></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="badge">Developer Workspace</span>
+        <button id="logoutButton" class="btn btn-secondary btn-small hidden">
+          Log out
+        </button>
+      </div>
     </header>
 
-    <section id="authView" class="auth card">
-      <p class="muted small">YOUR WORKSPACE</p>
-      <h1>Turn plans into progress.</h1>
-      <p class="muted">Create projects, organize tasks, and keep your work in one place.</p>
-      <div class="tabs">
-        <button id="showLogin" class="active" type="button">Sign in</button>
-        <button id="showSignup" type="button">Create account</button>
-      </div>
-      <form id="authForm" class="form">
-        <label for="email">Email address</label>
-        <input id="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-        <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required>
-        <button id="authSubmit" type="submit">Sign in</button>
-      </form>
-      <div id="authMessage" class="message" role="status" aria-live="polite"></div>
-      <p class="muted small">Use an email address you can access. Never share your password.</p>
-    </section>
+    <main>
+      <section class="hero">
+        <div class="eyebrow">Build. Organize. Deliver.</div>
+        <h1>Your ideas deserve a<br><span class="gradient">better workspace.</span></h1>
+        <p class="muted">
+          Organize your projects, track your tasks, and monitor your progress
+          from one simple dashboard.
+        </p>
+      </section>
 
-    <main id="dashboard" class="dashboard">
-      <div class="hero">
-        <div>
-          <p class="muted small">YOUR WORKSPACE</p>
-          <h1>Dashboard</h1>
-          <p class="muted" id="welcomeText">Welcome back.</p>
+      <section id="authSection" class="auth-layout">
+        <div class="card">
+          <h2>Welcome back 👋</h2>
+          <p class="muted">Log in to continue working on your projects.</p>
+
+          <form id="loginForm">
+            <div class="field">
+              <label for="loginEmail">Email address</label>
+              <input id="loginEmail" type="email" autocomplete="email"
+                placeholder="you@example.com" required>
+            </div>
+
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" type="password"
+                autocomplete="current-password" minlength="6" required>
+            </div>
+
+            <button id="loginButton" class="btn full" type="submit">
+              Log in
+            </button>
+          </form>
+
+          <div id="loginMessage" class="form-message" role="status"></div>
         </div>
-        <button id="signOut" class="ghost" type="button">Sign out</button>
-      </div>
-      <div class="stats">
-        <div class="card stat"><span class="muted">Projects</span><strong id="projectCount">0</strong></div>
-        <div class="card stat"><span class="muted">All tasks</span><strong id="taskCount">0</strong></div>
-        <div class="card stat"><span class="muted">Completed</span><strong id="doneCount">0</strong></div>
-      </div>
-      <div class="grid">
-        <section class="card">
-          <h2>Create a project</h2>
-          <form id="projectForm">
-            <label for="projectName">Project name</label>
-            <input id="projectName" maxlength="100" placeholder="e.g. Website launch" required>
-            <label for="projectDescription">Description (optional)</label>
-            <textarea id="projectDescription" rows="3" maxlength="1000" placeholder="What do you want to accomplish?"></textarea>
-            <button id="projectSubmit" type="submit">Add project</button>
+
+        <div class="card">
+          <h2>Create your account ✨</h2>
+          <p class="muted">Start managing your projects with DEVFORGE.</p>
+
+          <form id="signupForm">
+            <div class="field">
+              <label for="signupEmail">Email address</label>
+              <input id="signupEmail" type="email" autocomplete="email"
+                placeholder="you@example.com" required>
+            </div>
+
+            <div class="field">
+              <label for="signupPassword">Create a password</label>
+              <input id="signupPassword" type="password"
+                autocomplete="new-password" minlength="6"
+                placeholder="At least 6 characters" required>
+            </div>
+
+            <button id="signupButton" class="btn full" type="submit">
+              Create account
+            </button>
           </form>
-          <div id="projectMessage" class="message" role="status"></div>
-          <div id="projectsList" class="list"><div class="empty">Your projects will appear here.</div></div>
-        </section>
-        <section class="card">
-          <h2>Add a task</h2>
-          <form id="taskForm">
-            <label for="taskProject">Project</label>
-            <select id="taskProject" required style="width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#0b1223;color:var(--text)"><option value="">Create a project first</option></select>
-            <label for="taskTitle">Task title</label>
-            <input id="taskTitle" maxlength="200" placeholder="e.g. Design the homepage" required>
-            <button id="taskSubmit" type="submit">Add task</button>
-          </form>
-          <div id="taskMessage" class="message" role="status"></div>
-          <div id="tasksList" class="list"><div class="empty">Your tasks will appear here.</div></div>
-        </section>
-      </div>
+
+          <div id="signupMessage" class="form-message" role="status"></div>
+
+          <p class="muted" style="font-size:12px">
+            Email verification may be required before you can log in.
+          </p>
+        </div>
+    </section>   
+      <section id="dashboardSection" class="hidden">
+        <div class="hero">
+          <div class="eyebrow">Your personal workspace</div>
+          <h1>Welcome to your <span class="gradient">dashboard.</span></h1>
+          <p class="muted">Your projects, tasks, and progress — all in one place.</p>
+          <p id="userEmail" class="muted"></p>
+        </div>
+
+        <div id="appMessage" class="form-message" role="status"></div>
+
+        <div class="stats">
+          <div class="card">
+            <div class="stat-icon">📁</div>
+            <div class="stat-label">Total projects</div>
+            <div id="totalProjects" class="stat-number">0</div>
+          </div>
+          <div class="card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-label">Total tasks</div>
+            <div id="totalTasks" class="stat-number">0</div>
+          </div>
+          <div class="card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-label">Completed tasks</div>
+            <div id="completedTasks" class="stat-number">0</div>
+            <div class="progress-track">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace">
+          <section class="card">
+            <div class="section-heading">
+              <h2>📁 My projects</h2>
+            </div>
+
+            <form id="projectForm">
+              <div class="field">
+                <label for="projectName">Project name</label>
+                <input id="projectName" maxlength="100"
+                  placeholder="e.g. My portfolio website" required>
+              </div>
+              <div class="field">
+                <label for="projectDescription">Description (optional)</label>
+                <textarea id="projectDescription" maxlength="1000"
+                  placeholder="What is this project about?"></textarea>
+              </div>
+              <button id="projectButton" class="btn" type="submit">
+                + Create project
+              </button>
+            </form>
+
+            <div id="projectsList"></div>
+          </section>
+
+          <section class="card">
+            <div class="section-heading">
+              <h2>📝 My tasks</h2>
+            </div>
+
+            <form id="taskForm">
+              <div class="field">
+                <label for="taskTitle">Task title</label>
+                <input id="taskTitle" maxlength="200"
+                  placeholder="e.g. Design the homepage" required>
+              </div>
+              <div class="field">
+                <label for="taskProject">Project</label>
+                <select id="taskProject" required>
+                  <option value="">Create a project first</option>
+                </select>
+              </div>
+              <button id="taskButton" class="btn" type="submit">
+                + Add task
+              </button>
+            </form>
+
+            <div id="tasksList"></div>
+          </section>
+        </div>
+      </section>
     </main>
-    <footer>DEVFORGE • Keep your work moving forward</footer>
+
+    <footer>
+      DEVFORGE © <span id="currentYear"></span> · Build. Organize. Deliver.
+    </footer>
   </div>
 
-  <script type="module">
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://gvqzhorjiimuhcqtobna.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_b5T9RN9yJkKl5iKZt9n1IA_wrjYgemL";
 
-    const SUPABASE_URL = 'https://gvqzhorjiimuhcqtobna.supabase.co';
-    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_b5T9RN9yJkKl5iKZt9n1IA_wrjYgemL';
-    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const $ = (id) => document.getElementById(id);
-    let mode = 'login';
+
     let currentUser = null;
     let projects = [];
     let tasks = [];
 
-    function showMessage(id, text, type = 'info') {
-      const el = $(id);
-      el.textContent = text;
-      el.className = `message show ${type}`;
+    $("currentYear").textContent = new Date().getFullYear();
+
+    function showMessage(id, message, type = "") {
+      const element = $(id);
+      element.textContent = message;
+      element.className = "form-message " + type;
     }
-    function clearMessage(id) {
-      const el = $(id);
-      el.textContent = '';
-      el.className = 'message';
-    }
-    function setBusy(buttonId, busy, text) {
+
+    function setBusy(buttonId, busy, busyText, normalText) {
       const button = $(buttonId);
       button.disabled = busy;
-      if (text) button.textContent = text;
+      button.textContent = busy ? busyText : normalText;
     }
-    function escapeHtml(value) {
-      return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    }
-    function setMode(nextMode) {
-      mode = nextMode;
-      $('showLogin').classList.toggle('active', mode === 'login');
-      $('showSignup').classList.toggle('active', mode === 'signup');
-      $('authSubmit').textContent = mode === 'login' ? 'Sign in' : 'Create account';
-      $('password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
-      clearMessage('authMessage');
-    }
-    $('showLogin').addEventListener('click', () => setMode('login'));
-    $('showSignup').addEventListener('click', () => setMode('signup'));
 
-    $('authForm').addEventListener('submit', async (event) => {
+    function showAuth() {
+      $("authSection").classList.remove("hidden");
+      $("dashboardSection").classList.add("hidden");
+      $("logoutButton").classList.add("hidden");
+    }
+
+    function showDashboard() {
+      $("authSection").classList.add("hidden");
+      $("dashboardSection").classList.remove("hidden");
+      $("logoutButton").classList.remove("hidden");
+      $("userEmail").textContent = currentUser?.email || "";
+    }
+
+    function friendlyError(error) {
+      const message = error?.message || "Something went wrong. Please try again.";
+      if (message.toLowerCase().includes("invalid login credentials")) {
+        return "Email or password is incorrect. Check them and try again.";
+      }
+      if (message.toLowerCase().includes("email not confirmed")) {
+        return "Please confirm your email using the link sent to your inbox.";
+      }
+      if (message.toLowerCase().includes("row-level security")) {
+        return "Database security blocked this action. Check your Supabase table policies.";
+      }
+      return message;
+    }
+
+    $("signupForm").addEventListener("submit", async (event) => {
       event.preventDefault();
-      clearMessage('authMessage');
-      const email = $('email').value.trim();
-      const password = $('password').value;
-      setBusy('authSubmit', true, mode === 'login' ? 'Signing in…' : 'Creating account…');
+      showMessage("signupMessage", "");
+      setBusy("signupButton", true, "Creating account...", "Create account");
+
       try {
-        if (mode === 'signup') {
-          const { data, error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: { emailRedirectTo: 'https://idowusamuel587-bit.github.io/devforge/' }
-          });
-          if (error) throw error;
-          if (data.session) {
-            showMessage('authMessage', 'Account created! Opening your dashboard…', 'ok');
-            await openDashboard(data.user);
-          } else if (data.user) {
-            showMessage('authMessage', 'Registration request received. Check your email inbox and Spam/Junk for a confirmation link. If no email arrives, check Supabase Authentication email settings and email delivery limits. If you already tried this email, try signing in instead.', 'ok');
-          } else {
-            showMessage('authMessage', 'Supabase did not return a user. Please try again.', 'err');
-          }
+        const email = $("signupEmail").value.trim();
+        const password = $("signupPassword").value;
+
+        const { data, error } = await db.auth.signUp({
+          email,
+          password
+        });
+
+        if (error) throw error;
+
+        if (data.session && data.user) {
+          currentUser = data.user;
+          showDashboard();
+          await loadWorkspace();
+          showMessage("appMessage", "Your account was created successfully.", "success");
         } else {
-          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-          if (error) throw error;
-          if (data.user) await openDashboard(data.user);
+          showMessage(
+            "signupMessage",
+            "Registration submitted! Check your email for a verification link, then log in."
+          );
         }
-      } catch (err) {
-        showMessage('authMessage', err?.message || 'Something went wrong. Please try again.', 'err');
+      } catch (error) {
+        showMessage("signupMessage", friendlyError(error), "error");
       } finally {
-        setBusy('authSubmit', false, mode === 'login' ? 'Sign in' : 'Create account');
+        setBusy("signupButton", false, "", "Create account");
       }
     });
 
-    async function openDashboard(user) {
-      currentUser = user;
-      $('authView').style.display = 'none';
-      $('dashboard').style.display = 'block';
-      $('welcomeText').textContent = `Signed in as ${user.email || 'your account'}`;
-      await loadData();
-    }
-    async function closeDashboard() {
+    $("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      showMessage("loginMessage", "");
+      setBusy("loginButton", true, "Logging in...", "Log in");
+
+      try {
+        const { data, error } = await db.auth.signInWithPassword({
+          email: $("loginEmail").value.trim(),
+          password: $("loginPassword").value
+        });
+
+        if (error) throw error;
+
+        currentUser = data.user;
+        showDashboard();
+        await loadWorkspace();
+      } catch (error) {
+        showMessage("loginMessage", friendlyError(error), "error");
+      } finally {
+        setBusy("loginButton", false, "", "Log in");
+      }
+    });
+
+    $("logoutButton").addEventListener("click", async () => {
+      const { error } = await db.auth.signOut();
+      if (error) {
+        showMessage("appMessage", friendlyError(error), "error");
+        return;
+      }
       currentUser = null;
       projects = [];
       tasks = [];
-      $('dashboard').style.display = 'none';
-      $('authView').style.display = 'block';
-      $('authForm').reset();
-      setMode('login');
-    }
-    $('signOut').addEventListener('click', async () => {
-      const { error } = await supabase.auth.signOut();
-      if (error) showMessage('projectMessage', error.message, 'err');
-      await closeDashboard();
+      showAuth();
+      showMessage("loginMessage", "You have logged out successfully.", "success");
     });
 
-    async function loadData() {
+    async function loadWorkspace() {
       if (!currentUser) return;
+
+      showMessage("appMessage", "Loading your workspace...");
+
       const [projectResult, taskResult] = await Promise.all([
-        supabase.from('projects').select('id,user_id,name,description,created_at').eq('user_id', currentUser.id).order('created_at', {ascending:false}),
-        supabase.from('tasks').select('id,user_id,project_id,title,completed,created_at').eq('user_id', currentUser.id).order('created_at', {ascending:false})
+        db.from("projects").select("*").order("created_at", { ascending: false }),
+        db.from("tasks").select("*").order("created_at", { ascending: false })
       ]);
-      if (projectResult.error) showMessage('projectMessage', `Could not load projects: ${projectResult.error.message}`, 'err');
-      if (taskResult.error) showMessage('taskMessage', `Could not load tasks: ${taskResult.error.message}`, 'err');
+
+      if (projectResult.error) {
+        showMessage("appMessage", friendlyError(projectResult.error), "error");
+        return;
+      }
+
+      if (taskResult.error) {
+        showMessage("appMessage", friendlyError(taskResult.error), "error");
+        return;
+      }
+
       projects = projectResult.data || [];
       tasks = taskResult.data || [];
-      renderAll();
+
+      renderProjects();
+      renderTaskProjectOptions();
+      renderTasks();
+      renderStats();
+
+      showMessage("appMessage", "Your workspace is up to date.", "success");
     }
 
-    function renderAll() {
-      $('projectCount').textContent = projects.length;
-      $('taskCount').textContent = tasks.length;
-      $('doneCount').textContent = tasks.filter(t => t.completed).length;
-      const select = $('taskProject');
+    async function createProject(event) {
+      event.preventDefault();
+      if (!currentUser) return;
+
+      const name = $("projectName").value.trim();
+      const description = $("projectDescription").value.trim();
+
+      if (!name) {
+        showMessage("appMessage", "Please enter a project name.", "error");
+        return;
+      }
+
+      setBusy("projectButton", true, "Creating...", "+ Create project");
+
+      try {
+        const { error } = await db.from("projects").insert({
+          user_id: currentUser.id,
+          name,
+          description
+        });
+
+        if (error) throw error;
+
+        $("projectForm").reset();
+        await loadWorkspace();
+      } catch (error) {
+        showMessage("appMessage", friendlyError(error), "error");
+      } finally {
+        setBusy("projectButton", false, "", "+ Create project");
+      }
+    }
+
+    $("projectForm").addEventListener("submit", createProject);
+
+    function renderProjects() {
+      const list = $("projectsList");
+
+      if (!projects.length) {
+        list.innerHTML = '<div class="empty">No projects yet. Create your first one above.</div>';
+        return;
+      }
+
+      list.innerHTML = projects.map((project) => {
+        const safeName = escapeHTML(project.name);
+        const safeDescription = escapeHTML(project.description || "No description provided.");
+        const count = tasks.filter((task) => task.project_id === project.id).length;
+
+        return `
+          <article class="item">
+            <div class="item-top">
+              <div>
+                <p class="item-title">${safeName}</p>
+                <p class="item-description">${safeDescription}</p>
+              </div>
+              <span class="status">${count} task${count === 1 ? "" : "s"}</span>
+            </div>
+            <div class="item-actions">
+              <button class="btn btn-danger btn-small"
+                data-delete-project="${escapeHTML(project.id)}">Delete project</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderTaskProjectOptions() {
+      const select = $("taskProject");
       const previous = select.value;
-      select.innerHTML = projects.length
-        ? projects.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join('')
-        : '<option value="">Create a project first</option>';
-      if (projects.some(p => p.id === previous)) select.value = previous;
-      $('taskSubmit').disabled = projects.length === 0;
 
-      $('projectsList').innerHTML = projects.length ? projects.map(p => `
-        <article class="item">
-          <div class="itemtop"><strong>${escapeHtml(p.name)}</strong><button class="danger" data-delete-project="${escapeHtml(p.id)}" type="button">Delete</button></div>
-          ${p.description ? `<p class="muted small">${escapeHtml(p.description)}</p>` : ''}
-          <p class="muted small">${tasks.filter(t => t.project_id === p.id).length} task(s)</p>
-        </article>`).join('') : '<div class="empty">No projects yet. Create your first project above.</div>';
+      if (!projects.length) {
+        select.innerHTML = '<option value="">Create a project first</option>';
+        return;
+      }
 
-      $('tasksList').innerHTML = tasks.length ? tasks.map(t => `
-        <article class="item">
-          <div class="taskrow">
-            <input type="checkbox" data-toggle-task="${escapeHtml(t.id)}" ${t.completed ? 'checked' : ''} aria-label="Mark task complete">
-            <span class="${t.completed ? 'done' : ''}">${escapeHtml(t.title)}</span>
-            <button class="danger" data-delete-task="${escapeHtml(t.id)}" type="button">Delete</button>
-          </div>
-          <p class="muted small">${escapeHtml(projects.find(p => p.id === t.project_id)?.name || 'Project')}</p>
-        </article>`).join('') : '<div class="empty">No tasks yet. Add your first task above.</div>';
+      select.innerHTML = '<option value="">Choose a project</option>' +
+        projects.map((project) =>
+          `<option value="${escapeHTML(project.id)}">${escapeHTML(project.name)}</option>`
+        ).join("");
+
+      if (projects.some((project) => project.id === previous)) {
+        select.value = previous;
+      }
     }
 
-    $('projectForm').addEventListener('submit', async (event) => {
+    $("taskForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       if (!currentUser) return;
-      clearMessage('projectMessage');
-      const name = $('projectName').value.trim();
-      const description = $('projectDescription').value.trim();
-      if (!name) return showMessage('projectMessage', 'Enter a project name.', 'err');
-      setBusy('projectSubmit', true, 'Adding…');
+
+      const title = $("taskTitle").value.trim();
+      const projectId = $("taskProject").value;
+
+      if (!title || !projectId) {
+        showMessage("appMessage", "Enter a task title and choose a project.", "error");
+        return;
+      }
+
+      setBusy("taskButton", true, "Adding...", "+ Add task");
+
       try {
-        const { error } = await supabase.from('projects').insert({ user_id: currentUser.id, name, description });
+        const { error } = await db.from("tasks").insert({
+          user_id: currentUser.id,
+          project_id: projectId,
+          title,
+          completed: false
+        });
+
         if (error) throw error;
-        $('projectForm').reset();
-        showMessage('projectMessage', 'Project added successfully.', 'ok');
-        await loadData();
-      } catch (err) {
-        showMessage('projectMessage', `Could not add project: ${err?.message || 'Unknown error'}`, 'err');
+
+        $("taskForm").reset();
+        await loadWorkspace();
+      } catch (error) {
+        showMessage("appMessage", friendlyError(error), "error");
       } finally {
-        setBusy('projectSubmit', false, 'Add project');
+        setBusy("taskButton", false, "", "+ Add task");
       }
     });
 
-    $('taskForm').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (!currentUser) return;
-      clearMessage('taskMessage');
-      const project_id = $('taskProject').value;
-      const title = $('taskTitle').value.trim();
-      if (!project_id) return showMessage('taskMessage', 'Create a project before adding tasks.', 'err');
-      if (!title) return showMessage('taskMessage', 'Enter a task title.', 'err');
-      setBusy('taskSubmit', true, 'Adding…');
-      try {
-        const { error } = await supabase.from('tasks').insert({ user_id: currentUser.id, project_id, title });
-        if (error) throw error;
-        $('taskTitle').value = '';
-        showMessage('taskMessage', 'Task added successfully.', 'ok');
-        await loadData();
-      } catch (err) {
-        showMessage('taskMessage', `Could not add task: ${err?.message || 'Unknown error'}`, 'err');
-      } finally {
-        setBusy('taskSubmit', false, 'Add task');
-      }
-    });
+    function renderTasks() {
+      const list = $("tasksList");
 
-    $('projectsList').addEventListener('click', async (event) => {
-      const button = event.target.closest('[data-delete-project]');
+      if (!tasks.length) {
+        list.innerHTML = '<div class="empty">No tasks yet. Add a task above.</div>';
+        return;
+      }
+
+      const sortedTasks = [...tasks].sort((a, b) => {
+        if (a.completed === b.completed) return 0;
+        return a.completed ? 1 : -1;
+      });
+
+      list.innerHTML = sortedTasks.map((task) => {
+        const project = projects.find((item) => item.id === task.project_id);
+        const done = Boolean(task.completed);
+
+        return `
+          <article class="item ${done ? "task-done" : ""}">
+            <div class="item-top">
+              <div>
+                <p class="item-title">${escapeHTML(task.title)}</p>
+                <p class="item-description">${escapeHTML(project?.name || "Unknown project")}</p>
+              </div>
+              <span class="status ${done ? "done" : ""}">${done ? "Completed" : "In progress"}</span>
+            </div>
+            <div class="item-actions">
+              <button class="btn btn-secondary btn-small"
+                data-toggle-task="${escapeHTML(task.id)}">${done ? "Mark incomplete" : "Mark complete"}</button>
+              <button class="btn btn-danger btn-small"
+                data-delete-task="${escapeHTML(task.id)}">Delete task</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderStats() {
+      const completed = tasks.filter((task) => task.completed).length;
+      const total = tasks.length;
+      const percentage = total ? Math.round((completed / total) * 100) : 0;
+
+      $("totalProjects").textContent = projects.length;
+      $("totalTasks").textContent = total;
+      $("completedTasks").textContent = completed;
+      $("progressFill").style.width = percentage + "%";
+    }
+
+    $("projectsList").addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-delete-project]");
       if (!button) return;
-      const id = button.dataset.deleteProject;
-      const project = projects.find(p => p.id === id);
-      if (!project || !confirm(`Delete "${project.name}" and its tasks?`)) return;
+
+      const projectId = button.dataset.deleteProject;
+      const project = projects.find((item) => item.id === projectId);
+      if (!project) return;
+
+      if (!confirm(`Delete "${project.name}" and all its tasks?`)) return;
+
       try {
-        const { error } = await supabase.from('projects').delete().eq('id', id).eq('user_id', currentUser.id);
-        if (error) throw error;
-        showMessage('projectMessage', 'Project deleted.', 'ok');
-        await loadData();
-      } catch (err) {
-        showMessage('projectMessage', `Could not delete project: ${err?.message || 'Unknown error'}`, 'err');
+        showMessage("appMessage", "Deleting project...");
+        const { error: taskError } = await db.from("tasks")
+          .delete().eq("project_id", projectId);
+
+        if (taskError) throw taskError;
+
+        const { error: projectError } = await db.from("projects")
+          .delete().eq("id", projectId);
+
+        if (projectError) throw projectError;
+
+        await loadWorkspace();
+      } catch (error) {
+        showMessage("appMessage", friendlyError(error), "error");
       }
     });
 
-    $('tasksList').addEventListener('change', async (event) => {
-      const box = event.target.closest('[data-toggle-task]');
-      if (!box) return;
-      const id = box.dataset.toggleTask;
+    $("tasksList").addEventListener("click", async (event) => {
+      const toggleButton = event.target.closest("[data-toggle-task]");
+      const deleteButton = event.target.closest("[data-delete-task]");
+
       try {
-        const { error } = await supabase.from('tasks').update({ completed: box.checked }).eq('id', id).eq('user_id', currentUser.id);
-        if (error) throw error;
-        await loadData();
-      } catch (err) {
-        showMessage('taskMessage', `Could not update task: ${err?.message || 'Unknown error'}`, 'err');
-        await loadData();
-      }
-    });
-    $('tasksList').addEventListener('click', async (event) => {
-      const button = event.target.closest('[data-delete-task]');
-      if (!button) return;
-      const id = button.dataset.deleteTask;
-      try {
-        const { error } = await supabase.from('tasks').delete().eq('id', id).eq('user_id', currentUser.id);
-        if (error) throw error;
-        showMessage('taskMessage', 'Task deleted.', 'ok');
-        await loadData();
-      } catch (err) {
-        showMessage('taskMessage', `Could not delete task: ${err?.message || 'Unknown error'}`, 'err');
+        if (toggleButton) {
+          const task = tasks.find((item) => item.id === toggleButton.dataset.toggleTask);
+          if (!task) return;
+
+          const { error } = await db.from("tasks")
+            .update({ completed: !task.completed })
+            .eq("id", task.id);
+
+          if (error) throw error;
+          await loadWorkspace();
+        }
+
+        if (deleteButton) {
+          const taskId = deleteButton.dataset.deleteTask;
+          if (!confirm("Delete this task?")) return;
+
+          const { error } = await db.from("tasks").delete().eq("id", taskId);
+          if (error) throw error;
+
+          await loadWorkspace();
+        }
+      } catch (error) {
+        showMessage("appMessage", friendlyError(error), "error");
       }
     });
 
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user && !currentUser) {
-        setTimeout(() => openDashboard(session.user), 0);
-      } else if (event === 'SIGNED_OUT') {
-        closeDashboard();
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    async function initializeApp() {
+      const { data, error } = await db.auth.getSession();
+
+      if (error) {
+        showAuth();
+        showMessage("loginMessage", friendlyError(error), "error");
+        return;
+      }
+
+      if (data.session?.user) {
+        currentUser = data.session.user;
+        showDashboard();
+        await loadWorkspace();
+      } else {
+        showAuth();
+      }
+    }
+
+    db.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT") {
+        currentUser = null;
+        projects = [];
+        tasks = [];
+        showAuth();
+      } else if (session?.user) {
+        currentUser = session.user;
       }
     });
 
-    const { data: sessionData } = await supabase.auth.getSession();
-    if (sessionData.session?.user) await openDashboard(sessionData.session.user);
+    initializeApp();
   </script>
 </body>
-</html>
+          </html>
